@@ -30,12 +30,6 @@
                             <option v-for="board in boards" v-bind:value="board.id">{{ board.name }}</option>
                         </select>
                     </div>
-                    <div class="input-field col m6 s12">
-                        <select v-model="selectedList" v-if="lists!=null" class="browser-default">
-                            <option value="" disabled selected style="display: none;">Choose the sprint backlog column</option>
-                            <option v-for="list in lists" v-bind:value="list.id">{{ list.name }}</option>
-                        </select>
-                    </div>
                 </div>
             </div>
             <div id="dependencyGraph"></div>

@@ -10,7 +10,6 @@ window.trelloHandler = new Vue({
         boards: null,
         selectedBoard: null,
         lists: null,
-        selectedList: null,
         cards: null,
         loading: false,
         trelloUrl: null,
@@ -20,20 +19,12 @@ window.trelloHandler = new Vue({
         selectedBoard: function(val, oldVal) {
             var vm = this;
             if (0 < val.length) {
-                Trello.get('/boards/' + val + '/lists').then(function(data) {
-                    vm.lists = data;
-                });
                 Trello.get('/boards/' + val + '/shortUrl').then(function(data) {
                     vm.trelloUrl = data._value;
                 });
+                vm.refresh();
             }
         },
-        selectedList: function(val, oldVal) {
-            var vm = this;
-            if (0 < val.length) {
-                vm.refresh()
-            }
-        }
     },
 
     methods: {
@@ -66,7 +57,7 @@ window.trelloHandler = new Vue({
         refresh: function() {
             var vm = this;
             this.loading = true;
-            Trello.get('/lists/' + this.selectedList +'/cards').then(function(data) {
+            Trello.get('/boards/' + this.selectedBoard +'/cards').then(function(data) {
                 vm.cards = data;
                 vm.deleteUselessCards();
                 vm.addOrUpdateCards();
